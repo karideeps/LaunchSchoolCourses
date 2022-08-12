@@ -1,0 +1,16 @@
+{
+  "en": {
+    "welcome": "Welcome to Calculator!",
+    "firstNumber": "Please enter the first number.",
+    "secondNumber": "Please enter the second number.",
+    "operation": "Please enter an operation: 1) Add, 2) Subtract, 3) Multiply, 4) Divide",
+    "output": "The result is:",
+    "playAgain": "Do you want to do another calculation?"
+  },
+
+  "es": {
+    "welcome": "Bienvenido a la calculadora!",
+    "playAgain": "¿Quieres hacer otro cálculo?"
+  }
+
+}

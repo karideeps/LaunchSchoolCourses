@@ -1,0 +1,17 @@
+welcome: "Welcome to Deepak's RPLS game! Number of wins needed:"
+obtain_player_choice: What is your choice? r for Rock, p for Paper, s for Scissors, l for Lizard, o for Spock
+error_player_choice: please enter either r, p, s, l, or o!
+round_number: 'ROUND:'
+player_choice: 'Last round you chose:'
+computer_choice: 'Last round computer chose: '
+round_winner_player: You won the last round!
+round_winner_computer: Computer won the last round!
+round_winner_tie: Last round was a tie!
+player_score: 'Your score:'
+computer_score: "Computer's score:"
+number_of_draws: "Number of draws:"
+grand_winner_player: rounds later.. YOU ARE THE GRAND WINNER!! CONGRATULATIONS!
+grand_winner_computer: rounds later.. the computer has beat you.. better luck next time!
+play_again?: Do you want to play again? Yes or Y to play again, No or N to exit
+error_play_again: Please input either Yes, Y, No, or N
+goodbye: Thank you for playing!
