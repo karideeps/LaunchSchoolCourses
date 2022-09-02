@@ -219,9 +219,6 @@ function createStudent(name, year) {
   };
 }
 
-// Test cases:
-
-
 school = {
   students: [],
 
@@ -274,20 +271,21 @@ school = {
         }
       })
     });
-    if (studentsEnrolled === 1) return undefined;
+    if (Number.isNaN(gradeTotal)) return undefined;
 
     console.log(`=${courseName} Grades=`);
     print.forEach(student => console.log(student));
     console.log('---');
     console.log(`Course Average: ${gradeTotal / studentsEnrolled}`);
   }
-}
+};
 
+// Test cases:
 const COURSES = {
   math:         { name: 'Math', code: 101, },
   advancedMath: { name: 'Advanced Math', code: 102, },
   physics:      { name: 'Physics', code: 202, }
-}
+};
 
 let foo = createStudent('foo', '3rd');
 school.addStudent(foo);
