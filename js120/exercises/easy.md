@@ -448,7 +448,110 @@ console.log(`${phanson.name} has ${phanson.numberOfPets()} adopted pets.`);
 console.log(`${bholmes.name} has ${bholmes.numberOfPets()} adopted pets.`);
 ```
 
+# 10 - Further Exploration
+```javascript
+let butterscotch = new Pet('cat', 'Butterscotch');
+let pudding      = new Pet('cat', 'Pudding');
+let darwin       = new Pet('bearded dragon', 'Darwin');
+let kennedy      = new Pet('dog', 'Kennedy');
+let sweetie      = new Pet('parakeet', 'Sweetie Pie');
+let molly        = new Pet('dog', 'Molly');
+let chester      = new Pet('fish', 'Chester');
+let asta         = new Pet('dog', 'Asta');
+let laddie       = new Pet('dog', 'Laddie');
+let fluffy       = new Pet('cat', 'Fluffy');
+let kat          = new Pet('cat', 'Kat');
+let ben          = new Pet('cat', 'Ben');
+let chatterbox   = new Pet('parakeet', 'Chatterbox');
+let Bluebell     = new Pet('parakeet', 'Bluebell');
+
+let phanson = new Owner('P Hanson');
+let bholmes = new Owner('B Holmes');
+
+let shelter = new Shelter();
+shelter.adopt(phanson, butterscotch);
+shelter.adopt(phanson, pudding);
+shelter.adopt(phanson, darwin);
+shelter.adopt(bholmes, kennedy);
+shelter.adopt(bholmes, sweetie);
+shelter.adopt(bholmes, molly);
+shelter.adopt(bholmes, chester);
+shelter.printAdoptions();
+console.log(`${phanson.name} has ${phanson.numberOfPets()} adopted pets.`);
+console.log(`${bholmes.name} has ${bholmes.numberOfPets()} adopted pets.`);
+console.log(`${shelter.name} has ${shelter.numberOfPets()} unadopted pets.`);
+
+/*
+The Animal Shelter has the following unadopted pets:
+a dog named Asta
+a dog named Laddie
+a cat named Fluffy
+a cat named Kat
+a cat named Ben
+a parakeet named Chatterbox
+a parakeet named Bluebell
+
+P Hanson has adopted the following pets:
+a cat named Butterscotch
+a cat named Pudding
+a bearded dragon named Darwin
+
+B Holmes has adopted the following pets:
+a dog named Molly
+a parakeet named Sweetie Pie
+a dog named Kennedy
+a fish named Chester
+
+P Hanson has 3 adopted pets.
+B Holmes has 4 adopted pets.
+The Animal shelter has 7 unadopted pets.
+*/
+```
+
 # 11
 ```javascript
+class Banner {
+  constructor(message) {
+    this.message = message;
+  }
 
+  displayBanner() {
+    console.log([this.horizontalRule(), this.emptyLine(), this.messageLine(), this.emptyLine(), this.horizontalRule()].join("\n"));
+  }
+
+  horizontalRule() {
+    return `+-${'-'.repeat(this.message.length)}-+`;
+  }
+
+  emptyLine() {
+    return `| ${' '.repeat(this.message.length)} |`;
+  }
+
+  messageLine() {
+    return `| ${this.message} |`;
+  }
+}
+
+// Test cases:
+let banner1 = new Banner('To boldly go where no one has gone before.');
+banner1.displayBanner();
+
+/*
++--------------------------------------------+
+|                                            |
+| To boldly go where no one has gone before. |
+|                                            |
++--------------------------------------------+
+*/
+
+let banner2 = new Banner('');
+banner2.displayBanner();
+
+/*
++--+
+|  |
+|  |
+|  |
++--+
+*/
 ```
