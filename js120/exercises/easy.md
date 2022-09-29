@@ -450,20 +450,87 @@ console.log(`${bholmes.name} has ${bholmes.numberOfPets()} adopted pets.`);
 
 # 10 - Further Exploration
 ```javascript
+class Pet {
+  constructor(type, name) {
+    this.type = type;
+    this.name = name;
+    Pet.unadoptedPets[this.name] = this;
+  }
+
+  static unadoptedPets = {}
+
+  static numberOfUnAdoptedPets() {
+    return Object.values(this.unadoptedPets).length;
+  }
+
+  static printUnadoptedPets() {
+    console.log('The Animal Shelter has the following unadopted pets:')
+    for (let pet in this.unadoptedPets) {
+      this.unadoptedPets[pet].getInfo();
+    }
+    console.log('');
+  }
+
+  getInfo() {
+    console.log(`a ${this.type} named ${this.name}`)
+  }
+}
+
+class Owner {
+  constructor(name) {
+    this.name = name;
+    this.pets = [];
+  }
+
+  numberOfPets() {
+    return this.pets.length;
+  }
+
+  printPets() {
+    this.pets.forEach(pet => pet.getInfo());
+  }
+}
+
+class Shelter {
+  constructor(owners) {
+    this.owners = {};
+  }
+
+  adopt(owner, pet) {
+    owner.pets.push(pet);
+    delete Pet.unadoptedPets[pet.name];
+    if (!this.owners[owner.name]) {
+      this.owners[owner.name] = owner;
+    }
+  }
+
+  printAdoptions() {
+    Pet.printUnadoptedPets();
+    for (let name in this.owners) {
+      console.log(`${name} has adopted the following pets:`)
+      this.owners[name].printPets();
+      console.log('');
+    }
+
+    console.log(`The Animal Shelter has ${Pet.numberOfUnAdoptedPets()} unadopted pets.`)
+  }
+}
+
+
+let asta = new Pet('dog', 'Asta');
+let laddie = new Pet('dog', 'Laddie');
+let fluffy = new Pet('cat', 'Fluffy');
+let kat = new Pet('cat', 'Kat');
+let ben = new Pet('cat', 'Ben');
+let chatterbox = new Pet('parakeet', 'Chatterbox');
+let bluebell = new Pet('parakeet', 'Bluebell');
 let butterscotch = new Pet('cat', 'Butterscotch');
-let pudding      = new Pet('cat', 'Pudding');
-let darwin       = new Pet('bearded dragon', 'Darwin');
-let kennedy      = new Pet('dog', 'Kennedy');
-let sweetie      = new Pet('parakeet', 'Sweetie Pie');
-let molly        = new Pet('dog', 'Molly');
-let chester      = new Pet('fish', 'Chester');
-let asta         = new Pet('dog', 'Asta');
-let laddie       = new Pet('dog', 'Laddie');
-let fluffy       = new Pet('cat', 'Fluffy');
-let kat          = new Pet('cat', 'Kat');
-let ben          = new Pet('cat', 'Ben');
-let chatterbox   = new Pet('parakeet', 'Chatterbox');
-let Bluebell     = new Pet('parakeet', 'Bluebell');
+let pudding = new Pet('cat', 'Pudding');
+let darwin = new Pet('bearded dragon', 'Darwin');
+let kennedy = new Pet('dog', 'Kennedy');
+let sweetie = new Pet('parakeet', 'Sweetie Pie');
+let molly = new Pet('dog', 'Molly');
+let chester = new Pet('fish', 'Chester');
 
 let phanson = new Owner('P Hanson');
 let bholmes = new Owner('B Holmes');
@@ -479,10 +546,9 @@ shelter.adopt(bholmes, chester);
 shelter.printAdoptions();
 console.log(`${phanson.name} has ${phanson.numberOfPets()} adopted pets.`);
 console.log(`${bholmes.name} has ${bholmes.numberOfPets()} adopted pets.`);
-console.log(`${shelter.name} has ${shelter.numberOfPets()} unadopted pets.`);
 
 /*
-The Animal Shelter has the following unadopted pets:
+The Animal Shelter hast hte following unadopted pets:
 a dog named Asta
 a dog named Laddie
 a cat named Fluffy
@@ -502,9 +568,10 @@ a parakeet named Sweetie Pie
 a dog named Kennedy
 a fish named Chester
 
+The Animal Shelter has 7 unadopted pets.
+
 P Hanson has 3 adopted pets.
 B Holmes has 4 adopted pets.
-The Animal shelter has 7 unadopted pets.
 */
 ```
 
