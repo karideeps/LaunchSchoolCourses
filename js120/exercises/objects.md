@@ -165,7 +165,7 @@ foo.viewNotes();
 // "Advanced Math: Difficult subject"
 ```
 
-# 5
+# 5a
 ```javascript
 function createStudent(name, year) {
   return {
@@ -314,5 +314,140 @@ school.courseReport('Math');
 console.log('-------------');
 school.courseReport('Advanced Math');
 console.log('-------------');
+school.courseReport('Physics');
+```
+
+# 5b
+```javascript
+function createStudent(name, year) {
+  return {
+    name,
+    year,
+    courses: [],
+  
+    info() {
+      console.log(`${this.name} is a ${this.year} year student`)
+    },
+
+    listCourses() {
+      console.log(this.courses);
+    },
+
+    addCourse(course) {
+      this.courses.push(course);
+    },
+
+    addNote(code, note) {
+      let index = this.courses.findIndex(course => course.code === code);
+      if (this.courses[index].note) {
+        this.courses[index].note += `; ${note}`;
+      } else {
+        this.courses[index].note = note;
+      }
+    },
+
+    viewNotes() {
+      this.courses.filter(course => course.note)
+                  .forEach(course => {
+        console.log(`${course.name}: ${course.note}`);
+      })
+    },
+
+    updateNote(code, note) {
+      let index = this.courses.findIndex(course => course.code === code);
+      if (this.courses[index]) this.courses[index].note = note;
+    },
+
+    addGrade(code, grade) {
+      this.courses.filter(course => course.code === code)[0].grade = grade;
+    },
+
+    getGrade(courseName) {
+      return this.courses.filter(course => course.name === courseName)[0].grade;
+    },
+
+    getReportCard() {
+      this.courses.forEach(course => {
+        let grade = course.grade || 'In progress';
+        console.log(`${course.name}: ${grade}`);
+      })
+    },
+
+    isEnrolledInCourse(courseName) {
+      return this.courses.filter(course => course.name === courseName).length === 1;
+    },
+  };
+}
+
+let school = {
+  students: {},
+
+  addStudent(name, year) {
+    if (!['1st', '2nd', '3rd', '4th', '5th'].includes(year)) {
+      console.log('Invalid year');
+    } else {
+      this.students[name] = createStudent(name, year);
+    }
+  },
+
+  enrollStudent(student, course) {
+    this.students[student].addCourse(course);
+  },
+
+  addGrade(student, code, grade) {
+    this.students[student].addGrade(code, grade);
+  },
+
+  getReportCard(student) {
+    this.students[student].getReportCard();
+  },
+
+  courseReport(course) {
+
+    let totalGrade = 0;
+    let numberOfStudentsEnrolled = 0;
+    let printLines = [];
+
+    for (let student in this.students) {
+      if (this.students[student].isEnrolledInCourse(course)) {
+        totalGrade += this.students[student].getGrade(course);
+        numberOfStudentsEnrolled += 1;
+        printLines.push(`${this.students[student].name}: ${this.students[student].getGrade(course)}`)
+      };
+    }
+
+    if (totalGrade && numberOfStudentsEnrolled) {
+      console.log(`=${course} Grades=`);
+      printLines.forEach(line => console.log(line));
+      console.log('---');
+      console.log(`Course Average: ${totalGrade / numberOfStudentsEnrolled}`);
+    }
+
+  }
+}
+
+school.addStudent('foo', '3rd');
+school.addStudent('bar', '1st');
+school.addStudent('qux', '2nd');
+
+school.enrollStudent('foo', {name: 'Math', code: 101});
+school.enrollStudent('foo', {name: 'Advanced Math', code: 102});
+school.enrollStudent('foo', {name: 'Physics', code: 202});
+school.enrollStudent('bar', {name: 'Math', code: 101});
+school.enrollStudent('qux', {name: 'Math', code: 101});
+school.enrollStudent('qux', {name: 'Advanced Math', code: 102});
+
+school.addGrade('foo', 101, 95);
+school.addGrade('foo', 102, 90);
+school.addGrade('bar', 101, 91);
+school.addGrade('qux', 101, 93);
+school.addGrade('qux', 102, 90);
+
+school.getReportCard('foo');
+school.getReportCard('bar');
+school.getReportCard('qux');
+
+school.courseReport('Math');
+school.courseReport('Advanced Math');
 school.courseReport('Physics');
 ```
