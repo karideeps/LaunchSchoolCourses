@@ -188,7 +188,7 @@ GraduateStudent.prototype.research = function() {
 }
 ```
 
-# 3
+# 3a
 ```javascript
 class CircularQueue {
   constructor(size) {
@@ -266,6 +266,48 @@ console.log(anotherQueue.dequeue() === 5);
 console.log(anotherQueue.dequeue() === 6);
 console.log(anotherQueue.dequeue() === 7);
 console.log(anotherQueue.dequeue() === null);
+```
+
+# 3b
+```javascript
+class CircularQueue {
+  constructor(size) {
+    this.array = new Array(size).fill(null);
+    this.currentIndex = 0;
+    this.oldestIndex = undefined;
+  }
+
+  enqueue(element) {
+    if (this.oldestIndex === undefined) this.oldestIndex = this.currentIndex;
+
+    if (this.array[this.currentIndex] !== null) {
+      this.update('oldestIndex');
+    }
+
+    this.array[this.currentIndex] = element;
+    this.update('currentIndex');
+  }
+
+  dequeue(element) {
+    if (this.oldestIndex === undefined) return null;
+
+    let oldestElement = this.array[this.oldestIndex];
+    this.array[this.oldestIndex] = null;
+
+    this.update('oldestIndex');
+
+    if (this.array[this.oldestIndex] === null) this.oldestIndex = undefined;
+
+    return oldestElement;
+  }
+
+  update(index) {
+    this[index] += 1;
+    if (this[index] === this.array.length) {
+      this[index] = 0;
+    }
+  }
+}
 ```
 
 # 3 - Further Exploration
