@@ -183,9 +183,8 @@ const Account = (function() {
 
 # 6
 ```javascript
-const ItemManager = (function() {
-
-  function createSKU(itemName, category) {
+const ItemCreator = (function() {
+  function createSkuCode(itemName, category) {
     let SKU = '';
   
     let itemNameArray = itemName.split(' ');
@@ -210,24 +209,33 @@ const ItemManager = (function() {
     return category.length >= 5;
   }
 
-  return {
+  function isValidQuantity(quantity) {
+    return (quantity !== undefined)
+  }
+
+  function createItem(itemName, category, quantity) {
+    if ((isValidItemName(itemName)) &&
+        (isValidCategory(category)) &&
+        (isValidQuantity(quantity))) {
+          let skuCode = createSkuCode(itemName, category);
+          return {
+            skuCode,
+            itemName,
+            category,
+            quantity,
+          };
+        }
+  }
+
+  return createItem;
+})();
+
+const ItemManager = {
     items: [],
 
     create(itemName, category, quantity) {
-      if (!isValidItemName(itemName) || 
-          !isValidCategory(category) || 
-          quantity === undefined) {
-            return false;
-          }
-
-      let SKU = createSKU(itemName, category);
-
-      this.items.push({
-        skuCode: SKU,
-        itemName,
-        category,
-        quantity,
-      });
+      let item = ItemCreator(itemName, category, quantity);
+      if (item) this.items.push(item);
     },
 
     update(SKU, obj) {
@@ -269,9 +277,7 @@ const ItemManager = (function() {
     itemWithSKU(SKU) {
       return this.items.filter(item => item.skuCode === SKU)[0];
     }
-  }
-
-})();
+};
 
 const ReportManager = {
   init(itemManager) {
@@ -294,5 +300,5 @@ const ReportManager = {
     this.items.inStock().forEach(item => itemsInStock.push(item.itemName));
     console.log(itemsInStock.join(','));
   }
-}
+};
 ```
