@@ -7,9 +7,22 @@ declare class `Diamond`
     input: string; `letter`
     output: `string`
 
-    let spacesAroundLetters = 0
+    declare `resultArray` and initialize it to `[]`
+    let letterIndex = Diamond.LETTERS.findIndex(letter)
+    resultArray.push(letterAndInnerSpace(letterIndex))
 
-    CONTINUE FROM HERE!!
+    from 1 to letter index; i // spaces around letter
+      indexOfNextLetter = letterIndex - i
+      letterLine = `${' '.repeat(i)}${letterAndInnerSpace(indexOfNextLetter)}${' '.repeat(i)}`
+      push and unshift `letterLine` to `resultArray`
+
+  static letterAndInnerSpace(index)
+    let letter = Diamond.LETTERS[index]
+    if index === 0 return letter
+    return `${letter}${' '.repeat(2 x index - 1)${letter}}
+
+
+
 
 
 */
