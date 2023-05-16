@@ -1,0 +1,19 @@
+#!/usr/bin/env node
+
+const { Client } = require('pg');
+
+let client = new Client ({
+  database: 'expenses',
+  user: 'karideeps',
+  password: '1234'
+});
+
+async function logQuery(queryText) {
+  await client.connect();
+
+  let data = await client.query(queryText);
+
+  // print each row of data.rows in the required way
+}
+
+logQuery('SELECT * FROM expenses');
