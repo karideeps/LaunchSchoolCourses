@@ -1,19 +1,72 @@
 #!/usr/bin/env node
 
+const PROCESS = require('process');
 const { Client } = require('pg');
-
-let client = new Client ({
+const client = new Client ({
   database: 'expenses',
   user: 'karideeps',
   password: '1234'
 });
 
-async function logQuery(queryText) {
-  await client.connect();
+const HELP = `An expense recording system
 
-  let data = await client.query(queryText);
+Commands:
 
-  // print each row of data.rows in the required way
+add AMOUNT MEMO [DATE] - record a new expense
+clear - delete all expenses
+list - list all expenses
+delete NUMBER - remove expense with id NUMBER
+search QUERY - list expenses with a matching memo field`
+
+function displayHelp() {
+  console.log(HELP);
+};
+
+async function listExpenses() {
+  await client.connect().catch(err => logAndExit(err));
+
+  let res = await client.query("SELECT * FROM expenses ORDER BY created_on ASC").catch(err => logAndExit(err));
+
+  res.rows.forEach(tuple => {
+    let columns = [
+      `${tuple.id}`.padStart(3),
+      tuple.created_on.toDateString().padStart(10),
+      tuple.amount.padStart(12),
+      tuple.memo
+    ];
+
+    console.log(columns.join(' | '));
+  });
+
+  await client.end().catch(err => logAndExit(err));
+};
+
+async function addExpense(amount, memo) {
+  await client.connect().catch(err => logAndExit(err));
+  let queryText = 'INSERT INTO expenses (amount, memo) VALUES ($1, $2)';
+  let queryValues = [amount, memo]
+
+  await client.query(queryText, queryValues).catch(err => logAndExit(err));
+
+  await client.end().catch(err => logAndExit(err));
 }
 
-logQuery('SELECT * FROM expenses');
+function logAndExit(err) {
+  console.log(err);
+  process.exit(1);
+}
+
+let args = PROCESS.argv;
+let command = args[2];
+
+if (command === 'list') {
+  listExpenses();
+} else if (command === 'add') {
+  if (args.length !== 5) {
+    console.log('You must provide an amount and memo.')
+  } else {
+    addExpense(args[3], args[4]);
+  }
+} else {
+  displayHelp();
+}
