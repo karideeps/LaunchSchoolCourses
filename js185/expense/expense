@@ -2,6 +2,7 @@
 
 const { Client } = require('pg');
 const PROCESS = require('process');
+const READLINE = require('readline');
 
 function logAndExit(err) {
   console.log(err);
@@ -19,34 +20,99 @@ class ExpenseData {
 
   async listExpenses() {
     await this.client.connect().catch(err => logAndExit(err));
+    await this.setup_schema().catch(err => logAndExit(err));
     let res = await this.client.query("SELECT * FROM expenses ORDER BY created_on ASC").catch(err => logAndExit(err));
-    this.displayExpenses(res.rows)
+    this.displayCount(res.rowCount);
+    this.displayExpenses(res.rows);
+    if (res.rowCount > 1) this.displayTotal(res.rows);
     await this.client.end().catch(err => logAndExit(err));
   }
 
   async addExpense(amount, memo) {
     await this.client.connect().catch(err => logAndExit(err));
+    await this.setup_schema().catch(err => logAndExit(err));
     let queryText = 'INSERT INTO expenses (amount, memo) VALUES ($1, $2)';
     let queryValues = [amount, memo]
-    await this.client.query(queryText, queryValues).catch(err => this.logAndExit(err));
+    await this.client.query(queryText, queryValues).catch(err => logAndExit(err));
     await this.client.end().catch(err => logAndExit(err));
   }
 
   async searchExpenses(term) {
     await this.client.connect().catch(err => logAndExit(err));
+    await this.setup_schema().catch(err => logAndExit(err));
     term = '%' + term + '%';
     let queryText = 'SELECT * FROM expenses WHERE memo ILIKE $1';
     let queryValues = [term]
     let res = await this.client.query(queryText, queryValues).catch(err => logAndExit(err));
+    this.displayCount(res.rowCount);
     this.displayExpenses(res.rows);
+    if (res.rowCount > 1) this.displayTotal(res.rows);
     await this.client.end().catch(err => logAndExit(err));
+  }
+
+  async deleteExpense(id) {
+    await this.client.connect().catch(err => logAndExit(err));
+    await this.setup_schema().catch(err => logAndExit(err));
+    let queryText = 'SELECT * FROM expenses WHERE id = $1';
+    let queryValues = [id];
+    let res = await this.client.query(queryText, queryValues).catch(err => logAndExit(err));
+    if (res.rows.length === 0) {
+      console.log(`There is no expense with the id '${id}'`)
+    } else {
+      queryText = 'DELETE FROM expenses WHERE id = $1';
+      await this.client.query(queryText, queryValues).catch(err => logAndExit(err));
+      console.log('The following expense has been deleted:');
+      this.displayExpenses(res.rows);
+    }
+    await this.client.end().catch(err => logAndExit(err));
+  }
+
+  async deleteAllExpenses() {
+    await this.client.connect().catch(err => logAndExit(err));
+    await this.setup_schema().catch(err => logAndExit(err));
+
+    await this.client.query('DELETE FROM expenses').catch(err => logAndExit(err));
+    console.log('All expenses have been deleted');
+
+    await this.client.end().catch(err => logAndExit(err));
+  }
+
+  async setup_schema() {
+    let queryText = "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = $1 AND table_name = $2"
+    let queryValues = ['public', 'expenses']
+    let data = await this.client.query(queryText, queryValues).catch(err => logAndExit(err));
+    let exists = data.rows[0].count;
+    if (exists === '0') {
+      await this.client.query("CREATE TABLE expenses (id SERIAL PRIMARY KEY, amount NUMERIC(6, 2) NOT NULL CHECK (amount > 0), memo TEXT NOT NULL, created_on DATE DEFAULT NOW() NOT NULL)").catch(err => logAndExit(err));
+    }
+  }
+
+  displayCount(rowCount) {
+    if (rowCount === 0) {
+      console.log('There are no expenses.')
+    } else if (rowCount === 1) {
+      console.log('There is 1 expense');
+    } else {
+      console.log(`There are ${rowCount} expenses.`);
+    }
+  }
+
+  displayTotal(rows) {
+    let longestMemo = '';
+    rows.forEach(row => {
+      if (longestMemo.length < row.memo.length) longestMemo = row.memo
+    })
+    let total = rows.reduce((acc, cv) => acc + Number(cv.amount), 0);
+    total = total.toFixed(2);
+    console.log('-'.repeat(39 + longestMemo.length));
+    console.log('Total'.padEnd(31) + total);
   }
 
   displayExpenses(rows) {
     rows.forEach(tuple => {
       let columns = [
         `${tuple.id}`.padStart(3),
-        tuple.created_on.toDateString().padStart(10),
+        tuple.created_on.toDateString().padStart(15),
         tuple.amount.padStart(12),
         tuple.memo
       ];
@@ -88,11 +154,21 @@ search QUERY - list expenses with a matching memo field`
           this.application.addExpense(args[3], args[4]);
         }
       } else if (command === 'search') {
-        if (args.length !== 4) {
-          console.log('You must provide a search term')
-        } else {
-          this.application.searchExpenses(args[3]);
-        }
+        this.application.searchExpenses(args[3]);
+      } else if (command === 'delete') {
+        this.application.deleteExpense(args[3]);
+      } else if (command === 'clear') {
+        let rl = READLINE.createInterface({
+          input: process.stdin,
+          output: process.stdout
+        });
+        let questionText = 'This will remove all expenses. Are you sure? (y/n) ';
+        rl.question(questionText, (answer) => {
+          if (answer === 'y') {
+            this.application.deleteAllExpenses();
+          }
+          rl.close();
+        });
       } else {
         this.displayHelp();
       }

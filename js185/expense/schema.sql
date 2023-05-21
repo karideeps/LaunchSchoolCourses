@@ -11,4 +11,4 @@ VALUES
 (14.56, 'Pencils'),
 (3.29, 'Coffee'),
 (49.99, 'Text Editor'),
-(3.49, 'More Coffee');
+(3.59, 'More Coffee');
