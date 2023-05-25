@@ -105,12 +105,17 @@ module.exports = class SessionPersistence {
     return true;
   }
 
+  // Create a new todo list with the specified title and add it to the list of
+  // todo lists. Returns `true` on success, `false` on failure. (At this time,
+  // there are no known failure conditions.)
   createTodoList(todoListTitle) {
     this._todoLists.push({
       id: nextId(),
       title: todoListTitle,
       todos: [],
     });
+
+    return true;
   }
 
   // Set a new title for the specified todo list. Returns `true` on success,
