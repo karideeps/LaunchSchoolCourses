@@ -1,1 +1,3 @@
 node_modules
+session-store.db
+js185/todos/lib/users.sql

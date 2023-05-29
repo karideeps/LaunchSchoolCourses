@@ -163,5 +163,9 @@ module.exports = class SessionPersistence {
     return todoList.todos.find(todo => todo.id === todoId);
   }
 
-
+  // Returns `true` if `error` seems to indicate a `UNIQUE` constraint
+  // violation, `false` otherwise.
+  isUniqueConstraintViolation(_error) {
+    return false;
+  }
 };
