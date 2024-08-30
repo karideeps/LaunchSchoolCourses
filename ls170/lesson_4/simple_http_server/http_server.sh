@@ -3,19 +3,19 @@
 function server () {
   while true
   do
-    my_arr=()
+    message_arr=()
     check=true
     while $check
     do
       read line
-      my_arr+=($line)
+      message_arr+=($line)
       if [[ "${#line}" -eq 1 ]]
       then
         check=false
       fi
     done
-    method=${my_arr[0]}
-    path=${my_arr[1]}
+    method=${message_arr[0]}
+    path=${message_arr[1]}
     if [[ $method = 'GET' ]]
     then
       if [[ -f "./www/$path" ]]
