@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Test 3</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="test3.css">
+  </head>
+  <body>
+
+    <script>
+      var article = {
+        toggleColor: function() {
+          document.querySelector('article').classList.toggle('toggled');
+        }
+      };
+    </script>
+
+    <section>
+      <article onclick="article.toggleColor();">
+        Click here
+      </article>
+    </section>
+  </body>
+</html>
