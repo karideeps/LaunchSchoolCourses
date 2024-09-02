@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Example 3</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="example3.css">
+  </head>
+  <body>
+    <fieldset>
+      <label>
+        Phone
+        <input type="tel" name="phone" value="503-555-1212">
+      </label>
+    </fieldset>
+    <fieldset>
+      <label>
+        <input type="radio" name="color" value="red">
+        Red
+      </label>
+
+      <label>
+        <input type="radio" name="color" value="blue" checked>
+        Blue
+      </label>
+
+      <label>
+        <input type="radio" name="color" value="green">
+        Green
+      </label>
+    </fieldset>
+
+    <fieldset>
+      <input type="submit" value="Save">
+    </fieldset>
+
+    <fieldset>
+      <label>
+        Phone
+        <input type="tel" name="phone" size="10" maxlength="16">
+      </label>
+      <br>
+      <label>
+        Cell Phone
+        <input type="tel" name="cell-phone" size="20" maxlength="40">
+      </label>
+    </fieldset>
+
+    <fieldset>
+      <label>
+        Phone
+        <input type="tel" name="phone" placeholder="###-###-####">
+      </label>
+    </fieldset>
+
+    <fieldset>
+      <label>
+        Email
+        <input type="email" name="email" value="xyz@email.com" disabled>
+      </label>
+      <br>
+      <input type="submit" value="save" disabled>
+    </fieldset>
+
+    <fieldset>
+      <label>
+        Home Phone
+        <input type="text" name="home_phone" required>
+      </label>
+      <br>
+      <label>
+        Business Phone
+        <input type="text" name="business_phone">
+      </label>
+      <br>
+      <input type="submit" value="Save">
+    </fieldset>
+
+    <fieldset>
+      <input type="tel" value="123-456-7890" name="phone" autocomplete="off">
+    </fieldset>
+
+    <fieldset>
+      <input type="text" name="full-name" autocapitalize="characters">
+    </fieldset>
+
+    <fieldset>
+      <input type="text" name="full-name" autocorrect="on">
+    </fieldset>
+  </body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Example 2</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="example2.css">
+  </head>
+  <body>
+    <form action="#" method="post">
+      <fieldset>
+        <label for="first_name">First Name</label>
+        <input type="text" name="first_name" value="Tom" id="first_name">
+      </fieldset>
+
+      <fieldset>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" value="Not-good-password" size="35">
+      </fieldset>
+
+      <fieldset>
+        <label for="email">Email</label>
+        <input type="email" name="email" placeholder="username@email.com" id="email">
+      </fieldset>
+
+      <fieldset>
+        <label for="phone">Phone</label>
+        <input type="tel" name="phone" placeholder="(###) ###-####" id="phone">
+      </fieldset>
+
+      <fieldset>
+        <label>
+          <input type="checkbox" name="choice" value="search">
+          Sort search results
+        </label>
+
+        <label>
+          <input type="checkbox" name="choice" value="google" checked>
+          Search on Google
+        </label>
+
+        <label>
+          <input type="checkbox" name="choice" value="recent" checked>
+          Recent results (within last year)
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <label>
+          <input type="radio" name="color" value="red">
+          Red
+        </label>
+
+        <label>
+          <input type="radio" name="color" value="green" checked>
+          Green
+        </label>
+
+        <label>
+          <input type="radio" name="color" value="blue">
+          Blue
+        </label>
+      </fieldset>
+
+      <fieldset>
+        <input type="submit" value="Save">
+      </fieldset>
+
+      <fieldset>
+        <input type="reset" value="Clear Form">
+      </fieldset>
+    </form>
+  </body>
+</html>
