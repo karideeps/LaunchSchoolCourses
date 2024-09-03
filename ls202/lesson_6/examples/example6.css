@@ -1,0 +1,23 @@
+header {
+  background-color: lightgreen;
+  font-size: 4rem;
+  height: 8rem;
+  left: 0;
+  line-height: 8rem;
+  opacity: .75;
+  position: fixed;
+  text-align: center;
+  top: 0;
+  width: 100%;
+}
+
+section {
+  margin: 0 auto;
+  padding: 10rem 1rem 0;
+  width: 600px;
+}
+
+p {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}

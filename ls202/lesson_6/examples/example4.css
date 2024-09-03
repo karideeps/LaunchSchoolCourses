@@ -1,0 +1,33 @@
+section {
+  border: 1px solid gray;
+  padding: 70px 10px;
+}
+
+aside {
+  border: 1px solid black;
+  display: inline-block;
+  height: 100px;
+  line-height: 100px;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  width: 100px;
+}
+
+.normal {
+  background-color: yellow;
+}
+
+.shifted {
+  position: relative;
+}
+
+.pos {
+  background-color: cyan;
+  left: 60px;
+}
+
+.neg {
+  background-color: lightgreen;
+  left: -60px;
+}

@@ -1,0 +1,27 @@
+#columns {
+  background-color: #e0e0e0;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 20px;
+  width: 780px;
+}
+
+#primary, #secondary {
+  background-color: yellow;
+}
+
+#primary {
+  float: left;
+  width: 500px;
+}
+
+#secondary {
+  float: right;
+  width: 200px;
+}
+
+#columns::after {
+  clear: both;
+  content: "";
+  display: block;
+}
