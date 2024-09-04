@@ -1,0 +1,17 @@
+header {
+  color: red;
+  font-size: 32px;
+}
+
+h1 {
+  color: green;
+  display: inline-block;
+}
+
+header::after {
+  content: "*";
+}
+
+h1::before {
+  content: "+";
+}
