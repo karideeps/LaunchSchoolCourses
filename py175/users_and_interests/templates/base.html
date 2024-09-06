@@ -1,0 +1,6 @@
+<!DOCTYPE html>
+
+{% block content%}
+{% endblock %}
+
+<p>This are {{ g.users_data | count_users }} users with a total of {{ g.users_data | join(", ") }} interests.</p>

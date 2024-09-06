@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <h2 class="content-subhead">Search</h2>
+
+  <form action="/search" method="get">
+    <input name="query" value="{{ query }}">
+    <button type="submit">Search</button>
+  </form>
+
+  {% if query %}
+    {% if results | length == 0: %}
+      <p>Sorry, no matches were found.</p>
+    {% else %}
+      <h2 class="content-subhead">Results for '{{ query }}'</h2>
+
+      {% for chapter in results %}
+        <h3>{{ chapter[1] }}</h3>
+        <ul>
+          {% for para_num, paragraph in results[chapter] %}
+            <li><a href="/chapters/{{ chapter[0] }}#{{ para_num }}">{{ paragraph | highlight(query) | safe }}</a></li>
+          {% endfor %}
+        </ul>
+
+      {% endfor %}
+    {% endif %}
+  {% endif %}
+
+{% endblock %}

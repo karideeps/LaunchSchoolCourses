@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <p>{{ email }}</p>
+  <p>{{ interests }}</p>
+
+  <ul>
+    {% for user in other_users %}
+      <li><a href="{{ url_for('user_page', name=user )}}">{{ user }}</a></li>
+    {% endfor %}
+  </ul>
+{% endblock %}
